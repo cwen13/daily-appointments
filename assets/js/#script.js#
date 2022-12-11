@@ -44,7 +44,14 @@ $(function () {
     
     for (const tBlock in timeBlocks) {
       let blockHour = parseInt(tBlock..attr("id").slice(-2));
-      if {
+      // remove class time sigantuer th
+      if (currentHour < blockHour){
+	
+      } else if ((currentHour === blockHour){
+
+      } else {
+
+      }
 
       }
     }

@@ -1,6 +1,7 @@
 body {
   font-family: 'Open Sans', sans-serif;
   font-size: 16px;
+  margin: 5px 0px 5px 0px;
 }
 
 textarea {
@@ -31,7 +32,7 @@ textarea {
 }
 
 .past {
-  background-color: #d3d3d3;
+  background-color: red;
   color: white;
 }
 
@@ -57,3 +58,4 @@ textarea {
   font-size: 20px;
   transition: all 0.3s ease-in-out;
 }
+
