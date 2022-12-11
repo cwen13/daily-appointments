@@ -40,31 +40,30 @@ $(function () {
   // current hour in 24-hour time?
   function  updateTimeColor() {
     // run every minute to update colors
-    let currentHour = parseInt(dayjs().format("HH");)
+    let currentHour = parseInt(dayjs().format("HH"));
+
     
     for (const tBlock in timeBlocks) {
-      let blockHour = parseInt(tBlock..attr("id").slice(-2));
-      if {
-
+      let blockHour = parseInt(tBlock.attr("id").slice(-2));
+      
+      if (currentHour < blockHour) {
+	  tBlock.addClass("past");
+      } else if() {
+	tBlock.addClass("present");
+      } else {
+	tBlock.addClass("future");
       }
     }
-    
     return 0;
   }
+    
   
   // TODO: Add code to get any user input that was saved in localStorage and set
   // the values of the corresponding textarea elements. HINT: How can the id
   // attribute of each time-block be used to do this?
-  let DayPlan = {}
-  try {
-    DayPlan = JSON.parse(localStorage.getItem("dayPlan"));
-    if (DayPlan == null) {
-      DayPlan = {};
-    }
-  } catch (e) {
-    console.log("Dayplan was empty");
-  }
+  function fetchAppointment(){
     
+  }
 
   // TODO: Add code to display the current date in the header of the page.
   function displayTime() {
