@@ -68,25 +68,31 @@ $(function () {
   // the values of the corresponding textarea elements. HINT: How can the id
   // attribute of each time-block be used to do this?
   function saveAppointmentsToStorage(appointments) {
-    localStorage.setItem("appointments", appointments);
+    localStorage.setItem("appointments", JSON.stringify(appointments));
   }
   
   function loadAppointmentsFromStorage () {
     appointments = localStorage.getItem("appointments");
-    appointments = appointments ? JSON.parse(appointments) : {};
+    if (appointments) {
+      appointments = JSON.parse(appointments)
+    } else {
+      appointments = {}
+    }
     return 0;
   }
 
   function populateAppointment(){
-
+    for (const appointment in appointments) {
+      // loop thorugh keys and populate text areas
+    }
     return 0;
   }
 
   function handleAppointmentSave(event) {
-    let appointment = $(this).siblings()[1];
-    let appointmentHour = parseInt($(this).parent().attr("id").slice(-2));
-    let appointments = loadAppointmentsFromStorage();
-    appointments[appointmentHour-9] += "n/" + appointment.value;
+    let appointment = $(this).parent().children("textarea")[0].value;
+    let appointmentHour = $(this).parent().attr("id").slice(-2);
+    appointments[appointmentHour] = appointment.trim();   
+    saveAppointmentsToStorage(appointments);
     return 0;
   }
   
@@ -103,12 +109,14 @@ $(function () {
     return 0;
   }
 
-  
+  loadAppointmentsFromStorage();
+  displayTime();
+  setInterval(updateTime, 60000);
   saveBtn.on("click", handleAppointmentSave);
 //  clearTimeClass();
 //  updateTimeColor();
-  displayTime();
-  setInterval(updateTime, 60000)  
+
+
 
 });
 
