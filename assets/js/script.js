@@ -52,7 +52,6 @@ $(function () {
     
     for (let i=0;i,timeBlocks.length;i++) {
       let blockHour = parseInt(timeBlocks[i].getAttribute("id").slice(-2));
-      
       if (currentHour < blockHour) {
 	timeBlocks[i].addClass("past");
       } else if(currentHour === blockHour) {
@@ -69,7 +68,7 @@ $(function () {
   // the values of the corresponding textarea elements. HINT: How can the id
   // attribute of each time-block be used to do this?
   function saveAppointmentsToStorage(appointments) {
-    localStorage.setItem(appointments);
+    localStorage.setItem("appointments", appointments);
   }
   
   function loadAppointmentsFromStorage () {
@@ -79,15 +78,15 @@ $(function () {
   }
 
   function populateAppointment(){
-    
+
+    return 0;
   }
 
   function handleAppointmentSave(event) {
-    let appointment = $(this +" textarea")
-    let appointmentHour = parseInt($(this).attr("id"));
+    let appointment = $(this).siblings()[1];
+    let appointmentHour = parseInt($(this).parent().attr("id").slice(-2));
     let appointments = loadAppointmentsFromStorage();
-    appoointments[appointmentHour-9] += "n/" + appointment.val();
-    
+    appointments[appointmentHour-9] += "n/" + appointment.value;
     return 0;
   }
   
@@ -105,7 +104,7 @@ $(function () {
   }
 
   
-  saveBtn.on("click", saveAppointmentsToStorage);
+  saveBtn.on("click", handleAppointmentSave);
 //  clearTimeClass();
 //  updateTimeColor();
   displayTime();
