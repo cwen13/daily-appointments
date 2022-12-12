@@ -31,8 +31,6 @@ $(function () {
   // current hour in 24-hour time?
   function removeAddTimeClass(currentClass, timeClass) {
     let timeIndex = 0;
-    console.log(typeof currentClass);
-    console.log(currentClass);
     if (currentClass.contains("past")) {
       currentClass.replace("past", timeClass);
     }else if (currentClass.contains("present")) {
@@ -40,14 +38,12 @@ $(function () {
     } else if (currentClass.contains("future")) {
       currentClass.replace("future", timeClass);
     }
-    console.log(currentClass);
     return currentClass;
   }
   
   function  updateTimeColor() {
     // run every minute to update colors
-    //let currentHour = parseInt(dayjs().format("HH"));
-    let currentHour = 12;
+    let currentHour = parseInt(dayjs().format("HH"));
     let currentClass = [];
     for (let i=0;i<timeBlocks.length;i++) {
       let blockHour = parseInt(timeBlocks[i].getAttribute("id").slice(-2));
