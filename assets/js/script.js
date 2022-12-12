@@ -81,9 +81,11 @@ $(function () {
     return 0;
   }
 
-  function populateAppointment(){
-    for (const appointment in appointments) {
+  function populateAppointments(){
+    for (const appointmentHour in appointments) {
       // loop thorugh keys and populate text areas
+      let appointmentHourText = $("#hour-"+appointmentHour).children("textarea");
+      appointmentHourText[0].textContent = appointments[appointmentHour];
     }
     return 0;
   }
@@ -102,7 +104,6 @@ $(function () {
     $("#currentDay").text(todayDate)// +"/n"+todayTime);
     return 0;
   }
-
   function updateTime() {
     displayTime()
     updateTimeColor();
@@ -110,6 +111,7 @@ $(function () {
   }
 
   loadAppointmentsFromStorage();
+  populateAppointments()
   displayTime();
   setInterval(updateTime, 60000);
   saveBtn.on("click", handleAppointmentSave);
