@@ -12,6 +12,8 @@ hour is grey, and the future is green.
 
 # Usage
 
+_NOTE:_ time is displayed in 24hour format.
+
 This can be used by opening up the page and entering the day's appointments into
 he text areas. Then click the floppy disk to save that data for when you come
 back to the page the information remains.
