@@ -6,19 +6,16 @@ let appointments = {};
 // in the html.
 $(function () {
 
-  function displayAppointments () {
-    for (const hour in appointments) {
-      // run through each hour in localStorage
-      // insert test into textarea
-    }
-    return 0;
-  }
   // TODO: Add a listener for click events on the save button. This code should
   // use the id in the containing time-block as a key to save the user input in
   // local storage. HINT: What does `this` reference in the click listener
   // function? How can DOM traversal be used to get the "hour-x" id of the
   // time-block containing the button that was clicked? How might the id be
   // useful when saving the description in local storage?
+  function saveAppointmentsToStorage(appointments) {
+    localStorage.setItem("appointments", JSON.stringify(appointments));
+  }
+  
   function handleAppointmentSave(event) {
     let appointment = $(this).parent().children("textarea")[0].value;
     let appointmentHour = $(this).parent().attr("id").slice(-2);
@@ -32,44 +29,43 @@ $(function () {
   // attribute of each time-block be used to conditionally add or remove the
   // past, present, and future classes? How can Day.js be used to get the
   // current hour in 24-hour time?
-  function clearTimeClass() {
-    for (let i=0;i<timeBlocks.length;i++) {
-      if (timeBlocks[i].hasClass("past")) {
-	timeBlocks[i].addRemove("past");
-      } else if(timeBlocks[i].hasClass("present")) {
-	timeBlocks[i].addRemove("present");
-      } else {
-	timeBlocks[i].addRemove("future");
-      }
+  function removeAddTimeClass(currentClass, timeClass) {
+    let timeIndex = 0;
+    console.log(typeof currentClass);
+    console.log(currentClass);
+    if (currentClass.contains("past")) {
+      currentClass.replace("past", timeClass);
+    }else if (currentClass.contains("present")) {
+      currentClass.replace("present", timeClass);
+    } else if (currentClass.contains("future")) {
+      currentClass.replace("future", timeClass);
     }
-    return 0;
+    console.log(currentClass);
+    return currentClass;
   }
-
+  
   function  updateTimeColor() {
     // run every minute to update colors
-    let currentHour = parseInt(dayjs().format("HH"));
-    
-    for (let i=0;i,timeBlocks.length;i++) {
+    //let currentHour = parseInt(dayjs().format("HH"));
+    let currentHour = 12;
+    let currentClass = [];
+    for (let i=0;i<timeBlocks.length;i++) {
       let blockHour = parseInt(timeBlocks[i].getAttribute("id").slice(-2));
-      if (currentHour < blockHour) {
-	timeBlocks[i].addClass("past");
+      currentClass = timeBlocks[i].classList;
+      if (currentHour > blockHour) {
+	timeBlocks[i].classList = removeAddTimeClass(currentClass, "past");
       } else if(currentHour === blockHour) {
-	timeBlocks[i].addClass("present");
+	timeBlocks[i].classList = removeAddTimeClass(currentClass, "present");
       } else {
-	timeBlocks[i].addClass("future");
+	timeBlocks[i].classList = removeAddTimeClass(currentClass, "future");
       }
     }
     return 0;
   }
     
-  
   // TODO: Add code to get any user input that was saved in localStorage and set
   // the values of the corresponding textarea elements. HINT: How can the id
-  // attribute of each time-block be used to do this?
-  function saveAppointmentsToStorage(appointments) {
-    localStorage.setItem("appointments", JSON.stringify(appointments));
-  }
-  
+  // attribute of each time-block be used to do this?  
   function loadAppointmentsFromStorage () {
     appointments = localStorage.getItem("appointments");
     if (appointments) {
@@ -82,7 +78,6 @@ $(function () {
 
   function populateAppointments(){
     for (const appointmentHour in appointments) {
-      // loop thorugh keys and populate text areas
       let appointmentHourText = $("#hour-"+appointmentHour).children("textarea");
       appointmentHourText[0].textContent = appointments[appointmentHour];
     }
@@ -96,6 +91,7 @@ $(function () {
     $("#currentDay").text(todayDate)// +"/n"+todayTime);
     return 0;
   }
+
   function updateTime() {
     displayTime()
     updateTimeColor();
@@ -107,10 +103,7 @@ $(function () {
   displayTime();
   setInterval(updateTime, 60000);
   saveBtn.on("click", handleAppointmentSave);
-//  clearTimeClass();
-//  updateTimeColor();
-
-
+  updateTimeColor();
 
 });
 
