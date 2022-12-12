@@ -101,5 +101,6 @@ $(function () {
   saveBtn.on("click", handleAppointmentSave);
   updateTimeColor();
 
+  return 0;
 });
 
