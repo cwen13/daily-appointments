@@ -19,11 +19,11 @@ $(function () {
   // function? How can DOM traversal be used to get the "hour-x" id of the
   // time-block containing the button that was clicked? How might the id be
   // useful when saving the description in local storage?
-  function saveAppointment () {
-    // trigger each time a save button is clicked
-    let appointment = $(".desription").val();
-    let appointmentHour = parseInt($(this).attr("id").slice(-2));
-
+  function handleAppointmentSave(event) {
+    let appointment = $(this).parent().children("textarea")[0].value;
+    let appointmentHour = $(this).parent().attr("id").slice(-2);
+    appointments[appointmentHour] = appointment.trim();   
+    saveAppointmentsToStorage(appointments);
     return 0;
   }
   
@@ -34,7 +34,6 @@ $(function () {
   // current hour in 24-hour time?
   function clearTimeClass() {
     for (let i=0;i<timeBlocks.length;i++) {
-   
       if (timeBlocks[i].hasClass("past")) {
 	timeBlocks[i].addRemove("past");
       } else if(timeBlocks[i].hasClass("present")) {
@@ -90,13 +89,6 @@ $(function () {
     return 0;
   }
 
-  function handleAppointmentSave(event) {
-    let appointment = $(this).parent().children("textarea")[0].value;
-    let appointmentHour = $(this).parent().attr("id").slice(-2);
-    appointments[appointmentHour] = appointment.trim();   
-    saveAppointmentsToStorage(appointments);
-    return 0;
-  }
   
   // TODO: Add code to display the current date in the header of the page.
   function displayTime() {
